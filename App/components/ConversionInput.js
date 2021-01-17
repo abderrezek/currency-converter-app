@@ -9,7 +9,7 @@ import {
 
 import colors from "../constants/colors";
 
-export default ({ text, onButtonPress, ...props }) => {
+export const ConversionInput = ({ text, onButtonPress, ...props }) => {
   const containerStyles = [styles.container];
 
   if (!props.editable) {
@@ -30,7 +30,7 @@ export default ({ text, onButtonPress, ...props }) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    marginVertical: 10,
+    marginVertical: 5,
     marginHorizontal: 20,
     flexDirection: "row",
     borderRadius: 5,
