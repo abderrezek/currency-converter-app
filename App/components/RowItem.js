@@ -3,16 +3,18 @@ import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 import colors from "../constants/colors";
 
-export const RowItem = ({ title, onPress, rightIcon }) => {
-  return (
-    <TouchableOpacity onPress={onPress} style={styles.row}>
-      <Text style={styles.title}>{title}</Text>
-      {rightIcon}
-    </TouchableOpacity>
-  );
-};
+const RowItemComponent = ({ title, onPress, rightIcon }) => (
+  <TouchableOpacity onPress={onPress} style={styles.row}>
+    <Text style={styles.title}>{title}</Text>
+    {rightIcon}
+  </TouchableOpacity>
+);
+// export const RowItem = React.memo(RowItemComponent);
+export const RowItem = RowItemComponent;
 
-export const RowSeparator = () => <View style={styles.separator} />;
+const RowSeparatorComponent = () => <View style={styles.separator} />;
+// export const RowSeparator = React.memo(RowSeparatorComponent);
+export const RowSeparator = RowSeparatorComponent;
 
 const styles = StyleSheet.create({
   row: {

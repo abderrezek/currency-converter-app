@@ -19,6 +19,7 @@ import colors from "../constants/colors";
 import { ConversionInput } from "../components/ConversionInput";
 import { Button } from "../components/Button";
 import { KeyboardSpacer } from "../components/KeyboardSpacer";
+// import { CurrencyList } from "../components/CurrencyList";
 
 const screen = Dimensions.get("window");
 
@@ -26,18 +27,39 @@ export default ({ navigation }) => {
   const [scrollEnabled, setScrollEnabled] = useState(false);
   const [baseCurrency, setBaseCurrency] = useState("USD");
   const [quoteCurrency, setQuoteCurrency] = useState("DZD");
+  const [value, setValue] = useState("100");
+  // const [modal, setModal] = useState({
+  //   visible: false,
+  //   currency: "",
+  //   type: "",
+  // });
   const conversionRate = 0.89824;
-  const date = "2021-03-23";
+  const date = "2021-01-28";
 
   const swapCurrencies = () => {
-    let swap = baseCurrency;
     setBaseCurrency(quoteCurrency);
-    setQuoteCurrency(swap);
+    setQuoteCurrency(baseCurrency);
   };
+
+  // const changeCurrency = (type, currency) => {
+  //   if (type === "base") {
+  //     setBaseCurrency(currency);
+  //   } else if (type === "quote") {
+  //     setQuoteCurrency(currency);
+  //   }
+  // };
 
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+
+      {/* Modal Choose Currency */}
+      {/* <CurrencyList
+        modal={modal}
+        setModal={setModal}
+        changeCurrency={changeCurrency}
+      /> */}
+
       <ScrollView scrollEnabled={scrollEnabled}>
         {/* Button Passing To Options */}
         <SafeAreaView style={styles.header}>
@@ -64,17 +86,41 @@ export default ({ navigation }) => {
           <View style={styles.inputContainer}>
             <ConversionInput
               text={baseCurrency}
-              defaultValue="124"
-              onButtonPress={() => alert("todo!")}
+              defaultValue={value}
               keyboardType="numeric"
-              onChangeText={(text) => console.log("text", text)}
+              onChangeText={(text) => setValue(text)}
+              onButtonPress={() => {
+                navigation.push("CurrencyList", {
+                  title: "Base Currency",
+                  activeCurrency: baseCurrency,
+                  onChange: (currency) => setBaseCurrency(currency),
+                });
+                // setModal({
+                //   visible: true,
+                //   currency: baseCurrency,
+                //   type: "base",
+                // });
+              }}
             />
             <ConversionInput
               text={quoteCurrency}
-              defaultValue="123"
+              defaultValue={
+                value && `${(parseFloat(value) * conversionRate).toFixed(2)}`
+              }
               keyboardType="numeric"
               editable={false}
-              onButtonPress={() => alert("todo!")}
+              onButtonPress={() => {
+                navigation.push("CurrencyList", {
+                  title: "Quote Currency",
+                  activeCurrency: quoteCurrency,
+                  onChange: (currency) => setQuoteCurrency(currency),
+                });
+                // setModal({
+                //   visible: true,
+                //   currency: quoteCurrency,
+                //   type: "quote",
+                // });
+              }}
             />
           </View>
 
