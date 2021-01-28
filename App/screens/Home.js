@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   StyleSheet,
@@ -19,14 +19,16 @@ import colors from "../constants/colors";
 import { ConversionInput } from "../components/ConversionInput";
 import { Button } from "../components/Button";
 import { KeyboardSpacer } from "../components/KeyboardSpacer";
+import { ConversionContext } from "../util/ConversionContext";
 // import { CurrencyList } from "../components/CurrencyList";
 
 const screen = Dimensions.get("window");
 
 export default ({ navigation }) => {
+  const { baseCurrency, quoteCurrency, swapCurrencies } = useContext(
+    ConversionContext
+  );
   const [scrollEnabled, setScrollEnabled] = useState(false);
-  const [baseCurrency, setBaseCurrency] = useState("USD");
-  const [quoteCurrency, setQuoteCurrency] = useState("DZD");
   const [value, setValue] = useState("100");
   // const [modal, setModal] = useState({
   //   visible: false,
@@ -35,11 +37,6 @@ export default ({ navigation }) => {
   // });
   const conversionRate = 0.89824;
   const date = "2021-01-28";
-
-  const swapCurrencies = () => {
-    setBaseCurrency(quoteCurrency);
-    setQuoteCurrency(baseCurrency);
-  };
 
   // const changeCurrency = (type, currency) => {
   //   if (type === "base") {
@@ -92,8 +89,7 @@ export default ({ navigation }) => {
               onButtonPress={() => {
                 navigation.push("CurrencyList", {
                   title: "Base Currency",
-                  activeCurrency: baseCurrency,
-                  onChange: (currency) => setBaseCurrency(currency),
+                  isBaseCurrency: true,
                 });
                 // setModal({
                 //   visible: true,
@@ -112,8 +108,7 @@ export default ({ navigation }) => {
               onButtonPress={() => {
                 navigation.push("CurrencyList", {
                   title: "Quote Currency",
-                  activeCurrency: quoteCurrency,
-                  onChange: (currency) => setQuoteCurrency(currency),
+                  isBaseCurrency: false,
                 });
                 // setModal({
                 //   visible: true,
