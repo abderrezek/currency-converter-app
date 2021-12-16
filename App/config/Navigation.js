@@ -34,13 +34,13 @@ const ModalStackScreen = () => (
       component={CurrencyList}
       options={({ navigation, route }) => ({
         title: route.params && route.params.title,
-        headerLeft: null,
+        // headerLeft: null,
         headerRight: () => (
           <TouchableOpacity
             onPress={() => navigation.pop()}
             style={{ paddingHorizontal: 10 }}
           >
-            <Entypo name="cross" size={30} color={colors.blue} />
+            <Entypo name="cross" size={30} color={colors.white} />
           </TouchableOpacity>
         ),
       })}
